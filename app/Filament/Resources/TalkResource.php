@@ -39,6 +39,10 @@ class TalkResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->persistFiltersInSession()
+            ->filtersTriggerAction(function ($action){
+                return $action->button()->label('Filters');
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->sortable()
@@ -72,7 +76,20 @@ class TalkResource extends Resource
                 })
             ])
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('new_talk'),
+                Tables\Filters\SelectFilter::make('speaker')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
+                ->relationship('speaker', 'name'),
+                Tables\Filters\Filter::make('has_avatar')
+                    ->label('Show Only Speaker has Avatar')
+                    ->toggle()
+                ->query(function ($query){
+                    return $query->whereHas('speaker', function(Builder $query){
+                        return $query->whereNotNull('avatar');
+                    });
+                })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
