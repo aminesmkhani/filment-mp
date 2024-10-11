@@ -25,7 +25,6 @@ models:
   bio: text
   twitter_handel: string
   relationships:
-    belongsTo: Speaker
     belongsToMany: Conference
 
  Talk:

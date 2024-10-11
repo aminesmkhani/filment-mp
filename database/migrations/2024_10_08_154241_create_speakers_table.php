@@ -18,7 +18,6 @@ return new class extends Migration
             $table->json('qualifications');
             $table->text('bio');
             $table->string('twitter_handel');
-            $table->foreignId('speaker_id');
             $table->timestamps();
         });
     }

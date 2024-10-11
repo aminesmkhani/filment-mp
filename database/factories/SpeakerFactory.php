@@ -25,7 +25,7 @@ class SpeakerFactory extends Factory
             'email' => $this->faker->safeEmail(),
             'bio' => $this->faker->text(),
             'twitter_handel' => $this->faker->word(),
-            'speaker_id' => Speaker::factory(),
+            'qualifications' => [],
         ];
     }
 }
